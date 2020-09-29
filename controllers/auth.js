@@ -1,4 +1,6 @@
 const mysql = require('mysql');
+const jwt = require ('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -12,7 +14,7 @@ console.log(req.body);
 
 const { name, email, password, passwordConfirm} = req.body;
 
-db.query('SELECT email FROM users WHERE email = ?', [email], (error, results) => {
+db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
     if(error) {
         console.log(error);
     } 
@@ -26,6 +28,10 @@ db.query('SELECT email FROM users WHERE email = ?', [email], (error, results) =>
     });
 }
 
+let hashedPassword = await bcrypt.hash(password, 8);
+console.log(hashedPassword);
+
+
+});
 res.send("Form Submitted");
-})
 }
