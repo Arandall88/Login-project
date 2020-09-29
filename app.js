@@ -27,14 +27,9 @@ if(error) {
 }
 })
 
-app.get("/", (req,res) => {
-    // res.send("<h1>Home Page</h1>")
-    res.render("index");
-});
-app.get("/register", (req,res) => {
-    // res.send("<h1>Home Page</h1>")
-    res.render("register");
-});
+//Define routes
+app.use('/', require('./routes/pages'));
+app.use('/auth', require('./routes/auth'));
 
 app.listen(3000, () =>{
     console.log("Server started on port 3000");
